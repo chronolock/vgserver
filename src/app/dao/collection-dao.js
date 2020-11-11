@@ -7,6 +7,7 @@ class CollectionDAO{
         this.UPDATE_COLLECTION = 'UPDATE collection SET name = ?, cod = ?, era = ? WHERE id = ?;';
         this.DELETE_COLLECTION = 'DELETE FROM collection WHERE id = ?;';
         this.CHECK_COLLECTION = 'SELECT COUNT(*) as c FROM collection WHERE id = ?';
+        this.GET_BY_ID = `SELECT * FROM collection WHERE id = ?`
     }
 
     list(){
@@ -67,6 +68,15 @@ class CollectionDAO{
             this._db.all(this.CHECK_COLLECTION, [id], (err, result) => {
                 if(err) return reject(err.message);
                 return resolve(result[0].c == '1');
+            });
+        })
+    }
+
+    getById(id){
+        return new Promise((resolve, reject) => {
+            this._db.all(this.GET_BY_ID, [id], (err, result) => {
+                if(err) return reject(err.message);
+                return resolve(result[0]);
             });
         })
     }

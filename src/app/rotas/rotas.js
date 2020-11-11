@@ -31,8 +31,16 @@ module.exports = (app) => {
 
     app.post(CollectionController.rotas.add, CollectionController.addColection());
 
+    app.post(CollectionController.rotas.getById, CollectionController.getById);
+
     app.get(CardController.rotas.list, CardController.list());
 
+    app.get(CardController.rotas.getById, CardController.getById());
+
     app.post(CardController.rotas.add, CardController.addCard());
+
+    app.put(CardController.rotas.update, CardController.updateCard());
+
+    app.delete(CardController.rotas.delete, CardController.deleteCard());
 
 }

@@ -4,7 +4,8 @@ const db = require('../../config/database');
 class CollectionController{
     static rotas = {
         add: '/collection',
-        list: '/collection'
+        list: '/collection',
+        getById: '/collection/:id'
     }
 
     static addColection(){
@@ -25,6 +26,15 @@ class CollectionController{
         return function(req, resp){
             const collectionDao = new CollecionDAO(db);
             collectionDao.list().then((result) => {
+                resp.send(result);
+            }).catch(err => console.log(err));
+        }
+    }
+
+    static getById(){
+        return function(req, resp){
+            const collectionDao = new CollecionDAO(db);
+            collectionDao.getById(req.params.id).then((result) => {
                 resp.send(result);
             }).catch(err => console.log(err));
         }

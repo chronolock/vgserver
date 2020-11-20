@@ -6,7 +6,7 @@ const NationController = require('../controller/nationController');
 
 module.exports = (app) => {
 
-    app.get('/', function(req, resp) {
+    app.get('/', function (req, resp) {
         resp.send(
             `
                 <html>
@@ -42,5 +42,36 @@ module.exports = (app) => {
     app.put(CardController.rotas.update, CardController.updateCard());
 
     app.delete(CardController.rotas.delete, CardController.deleteCard());
+
+    app.get('/bot', (req, resp) => {
+        resp.setHeader("Content-Type","application/json");
+        resp.send(`{
+                        "id": f8cf7a7a-be4f-473a-8516-60d55534b5a6,
+                        "type": "application/vnd.lime.select+json",
+                        "to": "1042221589186385@messenger.gw.msging.net",
+                        "content": {
+                            scope:"immediate", // (create a quickreply instead menu)
+                            text: "Choose an option",
+                            options: [
+                                {
+                                    text: "First option"
+                                },
+                                {
+                                    order: 2,
+                                    text: "Second option"
+                                },
+                                {
+                                    order: 3,
+                                    text: "Third option",
+                                    type: "application/json",
+                                    value: {
+                                        key1: "value1",
+                                        key2: 2
+                                    }
+                                }
+                            ]
+                        }
+                    }`);
+    })
 
 }

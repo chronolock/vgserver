@@ -11,8 +11,8 @@ class ClanController{
     static addClan(){
         return function(req, resp){
             const obj = req.body;
-            if((obj.name == undefined) || (obj.nationId == undefined)){
-                resp.status(400).send('name e nationId são parametros obrigatorios');
+            if((obj.name == undefined) || (obj.nationId == undefined) || (obj.gift == undefined)){
+                resp.status(400).send('name, nationId e gift são parametros obrigatorios');
             } else {
                 const clanDao = new ClanDAO(db);
                 clanDao.add(obj).then((lastId) => {

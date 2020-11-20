@@ -22,7 +22,8 @@ const CLAN_SCHEMA = `
     CREATE TABLE IF NOT EXISTS clan(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name VARCHAR(50) NOT NULL,
-        nation INTEGER NOT NULL
+        nation INTEGER NOT NULL,
+        gift VARCHAR(1) NOT NULL
     )
 `;
 
@@ -79,9 +80,19 @@ const CLANS = [
     ['Cray Elemental', '-']
 ]
 
+const GIFTS = [
+    ['F', 'F', 'A'],
+    ['P', 'A', 'F'],
+    ['P', 'F', 'F', 'A', 'F', 'P'],
+    ['F', 'A', 'F', 'P'],
+    ['A', 'P', 'F'],
+    ['A', 'F', 'A', 'A', 'P'],
+    ['-', '-']
+]
+
 const NATION_INSERT = `INSERT INTO nation(name) SELECT ? WHERE NOT EXISTS (SELECT * FROM nation WHERE name = ?);`;
 
-const CLAN_INSERT = `INSERT INTO clan(name, nation) SELECT ?, ? WHERE NOT EXISTS (SELECT * FROM clan WHERE name = ?);`;
+const CLAN_INSERT = `INSERT INTO clan(name, nation, gift) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT * FROM clan WHERE name = ?);`;
 
 const GET_NATION_ID = `SELECT id FROM nation WHERE name = ?`;
 
@@ -103,8 +114,9 @@ db.serialize(() => {
             if(row.length == 1){
                 for(let j = 0; j < CLANS[i].length; j++){
                     const currentClan = CLANS[i][j];
+                    const currentGift = GIFTS[i][j];
                     //console.log("Insert: "+currentClan);
-                    db.run(CLAN_INSERT, [currentClan, row[0].id, currentClan])
+                    db.run(CLAN_INSERT, [currentClan, row[0].id, currentGift, currentClan])
                 }
             } else {
                 throw new Error("Não achei uma nação ou ela esta duplicada no banco " + row.length);

@@ -3,7 +3,7 @@ class ClanDAO{
     constructor(db){
         this._db = db;
         this.LIST_ALL = 'SELECT * FROM Clan';
-        this.ADD_CLAN = 'INSERT INTO clan(name, nation) VALUES(?, ?);';
+        this.ADD_CLAN = 'INSERT INTO clan(name, nation, gift) VALUES(?, ?, ?);';
         this.CHECK_CLAN = 'SELECT COUNT(*) as c FROM clan WHERE id = ?';;
     }
 
@@ -16,10 +16,10 @@ class ClanDAO{
         })
     }
 
-    add({name, nationId}){
+    add({name, nationId, gift}){
         return new Promise((resolve, reject) => {
             const stmt = this._db.prepare(this.ADD_CLAN);
-            stmt.run([name, nationId], (err) =>{
+            stmt.run([name, nationId, gift], (err) =>{
                 if(err){
                     console.log("Error ao inserir clã: \n"+err.message);
                     return reject(err.message);
@@ -29,7 +29,7 @@ class ClanDAO{
         });
     }
 
-    update({id, name, nationId}){
+    update({id, name, nationId, gift}){
 
     }
 

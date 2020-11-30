@@ -1,3 +1,5 @@
+const Collection = require("../model/Collection");
+
 class CollectionDAO{
 
     constructor(db){
@@ -50,7 +52,7 @@ class CollectionDAO{
         });
     }
 
-    remove(id){
+    delete(id){
         return new Promise((resolve, reject) => {
             const stmt = this._db.prepare(this.DELETE_COLLECTION);
             stmt.run(id, (err) =>{
@@ -76,7 +78,8 @@ class CollectionDAO{
         return new Promise((resolve, reject) => {
             this._db.all(this.GET_BY_ID, [id], (err, result) => {
                 if(err) return reject(err.message);
-                return resolve(result[0]);
+                const res = new Collection(result[0].id, result[0].name, result[0].cod, result[0].era);
+                return resolve(res);
             });
         })
     }

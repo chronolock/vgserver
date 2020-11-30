@@ -27,12 +27,18 @@ module.exports = (app) => {
 
     app.post(ClanController.rotas.add, ClanController.addClan());
 
+    //Collections
     app.get(CollectionController.rotas.list, CollectionController.list());
 
     app.post(CollectionController.rotas.add, CollectionController.addColection());
 
-    app.post(CollectionController.rotas.getById, CollectionController.getById);
+    app.get(CollectionController.rotas.getById, CollectionController.getById());
 
+    app.put(CollectionController.rotas.update, CollectionController.updateCollecion());
+
+    app.delete(CollectionController.rotas.delete, CollectionController.deleteCollecion());
+
+    //Cards
     app.get(CardController.rotas.list, CardController.list());
 
     app.get(CardController.rotas.getById, CardController.getById());
